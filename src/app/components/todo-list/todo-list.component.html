@@ -1,0 +1,31 @@
+
+<!-- Heading Tag -->
+
+
+  <h3>
+    Create Your To-do List
+  </h3>
+
+<input type="text" class="todo-input" placeholder="Enter Title" [(ngModel)]="todoTitle" (keyup.enter)="addTodo()">
+<input type="text" class="todo-input" placeholder="Enter Description" [(ngModel)]="todoDescription" (keyup.enter)="addTodo()">
+
+<!-- Loading app todo-item component in Todo-list which is a parent component -->
+<app-todo-item
+  *ngFor="let todo of todoService.todosFiltered()"
+  [todo]="todo"></app-todo-item>
+
+<!-- Div for calculating number of Todos -->
+
+<div class="extra-container">
+  <div>{{ todoService.remaining() }} items left</div>
+</div>
+
+<!-- Div buttons which include all, active, completed -->
+<div class="extra-container">
+  <div>
+    <button [ngClass]="{'active': todoService.filter === 'all'}" (click)="todoService.filter='all'">All</button>
+    <button [ngClass]="{'active': todoService.filter === 'active'}" (click)="todoService.filter='active'">Active</button>
+    <button [ngClass]="{'active': todoService.filter === 'completed'}" (click)="todoService.filter='completed'">Completed</button>
+  </div>
+
+</div>

@@ -1,0 +1,27 @@
+<!-- To do item component -->
+
+<div class="todo-item">
+  <div class="todo-item-left">
+    <input type="checkbox" [(ngModel)]="todo.completed" (change)="todoService.doneEdit(todo)">
+    <div *ngIf="!todo.editing; else editingTodo" class="todo-item-label" [ngClass]="{ 'completed' : todo.completed }"
+      (dblclick)="todoService.editTodo(todo)">{{ todo.title }}
+      <br>
+      <!-- String Interpolation To get value of description -->
+      {{ todo.description }}
+      <br>
+      {{ todo.dueDate | date : "dd.MM.y" }}
+      <!-- <br>
+      {{ todo.dueDate | date : 'mediumTime'}} -->
+
+    </div>
+    <!-- Used with ngif -->
+    <ng-template #editingTodo>
+      <input type="text" class="todo-item-edit" [(ngModel)]="todo.title"  (blur)="todoService.doneEdit(todo)" (keyup.enter)="todoService.doneEdit(todo)"
+        (keyup.esc)="todoService.cancelEdit(todo)" autofocus>
+    </ng-template>
+  </div>
+  <!-- Removes the element on click -->
+  <div class="remove-item" (click)="todoService.deleteTodo(todo.id)">
+    &times;
+  </div>
+</div>
